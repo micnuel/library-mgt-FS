@@ -78,11 +78,6 @@ export const deleteBook = async (
 ) => {
   try {
     await BookService.deleteBook(req.params.bookId)
-    if (req.params.bookId) {
-      res.send('Book deleted')
-    } else {
-      res.send('no book with id found')
-    }
     res.status(204).end()
   } catch (error) {
     next(new NotFoundError('Book not found', error))

@@ -49,7 +49,7 @@ export const updateAuthor = async (
 ) => {
   try {
     const update = req.body
-    const authorId = req.params.userId
+    const authorId = req.params.authorId
     const updateAuthor = await AuthorService.update(authorId, update)
     res.json(updateAuthor)
   } catch (error) {
@@ -64,11 +64,6 @@ export const deleteAuthor = async (
 ) => {
   try {
     await AuthorService.deleteAuthor(req.params.authorId)
-    if (req.params.authorId) {
-      res.send('Author deleted')
-    } else {
-      res.send('no author with id found')
-    }
     res.status(204).end()
   } catch (error) {
     next(new NotFoundError('Author not found', error))

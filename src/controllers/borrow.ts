@@ -65,15 +65,10 @@ export const deleteBorrow = async (
   next: NextFunction
 ) => {
   try {
-    await BorrowService.deleteBorrow(req.params.borrowId)
-    if (req.params.borrowId) {
-      res.send('Borrow deleted')
-    } else {
-      res.send('no borrow with id found')
-    }
+    await BorrowService.deleteBorrow(req.params.borrowerId)
     res.status(204).end()
   } catch (error) {
-    next(new NotFoundError('Borrow not found', error))
+    next(new NotFoundError('Borrow/Return not found', error))
   }
 }
 

@@ -60,11 +60,6 @@ export const deleteMovie = async (
 ) => {
   try {
     await MovieService.deleteMovie(req.params.movieId)
-    if (req.params.movieId) {
-      res.send('deleted')
-    } else {
-      res.send('no id found!')
-    }
     res.status(204).end()
   } catch (error) {
     next(new NotFoundError('Movie not found', error))

@@ -69,11 +69,6 @@ export const deleteUser = async (
 ) => {
   try {
     await UserService.deleteUser(req.params.userId)
-    if (req.params.userId) {
-      res.send('User deleted')
-    } else {
-      res.send('no user with id found')
-    }
     res.status(204).end()
   } catch (error) {
     next(new NotFoundError('User not found', error))

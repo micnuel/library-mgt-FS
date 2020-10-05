@@ -3,14 +3,14 @@ import mongoose, { Document } from 'mongoose'
 import { AuthorDocument } from './Author'
 
 export type BookDocument = Document & {
-  name: string
-  isbn: string
-  publisher: string[]
-  description: string
-  status: string
-  publishedYear: string
-  category: string[]
-  author: AuthorDocument[]
+  name: string;
+  isbn: string;
+  publisher: string[];
+  description: string;
+  status: string;
+  publishedYear: string;
+  category: string[];
+  author: AuthorDocument[];
 }
 
 const bookSchema = new mongoose.Schema({
@@ -19,7 +19,7 @@ const bookSchema = new mongoose.Schema({
     required: true,
     index: true,
   },
-  isdn: {
+  isbn: {
     type: String,
     required: true,
     index: true,

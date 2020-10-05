@@ -5,18 +5,26 @@ function create(author: AuthorDocument): Promise<AuthorDocument> {
 }
 
 function findAll(): Promise<AuthorDocument[]> {
-  return Author.find().sort({ firstName: 1 }).exec()
+  return (
+    Author.find()
+      //.populate('books') // gets all the books
+      .sort({ firstName: 1 })
+      .exec()
+  )
 }
 
 function findById(authorId: string): Promise<AuthorDocument> {
-  return Author.findById(authorId)
-    .exec()
-    .then((author) => {
-      if (!author) {
-        throw new Error(`Author ${authorId} not found`)
-      }
-      return author
-    })
+  return (
+    Author.findById(authorId) // try out aggregation on the model
+      //.populate('books', 'name -_id')// get book name only
+      .exec()
+      .then((author) => {
+        if (!author) {
+          throw new Error(`Author ${authorId} not found`)
+        }
+        return author
+      })
+  )
 }
 
 function deleteAuthor(authorId: string): Promise<AuthorDocument | null> {

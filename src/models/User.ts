@@ -1,12 +1,12 @@
 import mongoose, { Document } from 'mongoose'
 
 export type UserDocument = Document & {
-  firstName: string
-  lastName: string
-  email: string
-  role: string
-  password: string
-  username: string
+  firstName: string;
+  lastName: string;
+  email: string;
+  role: string;
+  password: string;
+  username: string;
 }
 
 const userSchema = new mongoose.Schema({
@@ -21,6 +21,7 @@ const userSchema = new mongoose.Schema({
   },
   username: {
     type: String,
+    unique: true,
   },
   email: {
     type: String,

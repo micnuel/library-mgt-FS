@@ -9,14 +9,19 @@ function findAll(): Promise<BookDocument[]> {
 }
 
 function findById(bookId: string): Promise<BookDocument> {
-  return Book.findById(bookId)
-    .exec()
-    .then((book) => {
-      if (!book) {
-        throw new Error(`Book ${bookId} not found`)
-      }
-      return book
-    })
+  return (
+    Book.findById(bookId)
+      //.select('name -_id')// filter by name
+      //.select('category -_id') //category
+      .exec()
+      .then((book) => {
+        if (!book) {
+          throw new Error(`Book ${bookId} not found`)
+        }
+        console.log(book)
+        return book
+      })
+  )
 }
 
 function deleteBook(bookId: string): Promise<BookDocument | null> {
