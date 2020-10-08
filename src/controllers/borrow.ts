@@ -24,7 +24,7 @@ export const createBorrow = async (
     await BorrowService.create(borrow)
     res.json(borrow)
   } catch (error) {
-    if (error.name === 'ValidatorError') {
+    if (error.name === 'ValidationError') {
       next(new BadRequestError('Invalid Request', error))
     } else {
       next(new InternalServerError('Internal Server Error', error))
@@ -65,7 +65,7 @@ export const deleteBorrow = async (
   next: NextFunction
 ) => {
   try {
-    await BorrowService.deleteBorrow(req.params.borrowerId)
+    await BorrowService.deleteBorrow(req.params.borrowId)
     res.status(204).end()
   } catch (error) {
     next(new NotFoundError('Borrow/Return not found', error))

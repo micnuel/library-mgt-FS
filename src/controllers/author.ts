@@ -22,7 +22,7 @@ export const createAuthor = async (
     await AuthorService.create(author)
     res.json(author)
   } catch (error) {
-    if (error.name === 'ValidatorError') {
+    if (error.name === 'ValidationError') {
       next(new BadRequestError('Invalid Request', error))
     } else {
       next(new InternalServerError('Internal Server Error', error))

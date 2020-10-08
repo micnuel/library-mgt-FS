@@ -3,6 +3,7 @@ import request from 'supertest'
 import { BookDocument } from '../../src/models/Book'
 import app from '../../src/app'
 import * as dbHelper from '../db-helper'
+import mongoose from 'mongoose'
 
 const nonExistingBookId = '5e57b77b5744fa0b461c7906'
 
@@ -42,6 +43,27 @@ describe('book controller', () => {
     expect(res.body.isbn).toBe('1234')
     expect(res.body.status).toBe('available')
   })
+
+  it('should not create a book with wrong data', async () => {
+    const res = await request(app).post('/api/v1/books').send({
+      namee: 'Intro to Maths',
+      status: 'available',
+    })
+    expect(res.status).toBe(400) // this is wrong!!!!!
+  })
+  it('should get back an existing book', async () => {
+    let res = await createBook()
+    expect(res.status).toBe(200)
+
+    const bookId = res.body._id
+    res = await request(app).get(`/api/v1/books/${bookId}`)
+
+    expect(res.body._id).toEqual(bookId)
+  })
+  it('should not get back a non-existing book', async () => {
+    const res = await request(app).get(`/api/v1/books/${nonExistingBookId}`)
+    expect(res.status).toBe(404)
+  })
   it('should get back all books', async () => {
     const create1 = await createBook({
       name: 'Intro to Maths',
@@ -57,26 +79,6 @@ describe('book controller', () => {
     expect(res3.body.length).toEqual(2)
     expect(res3.body[0]._id).toEqual(create1.body._id)
     expect(res3.body[1]._id).toEqual(create2.body._id)
-  })
-  it('should not create a book with wrong data', async () => {
-    const res = await request(app).post('/api/v1/books').send({
-      name: 'Intro to Maths',
-      status: 'available',
-    })
-    expect(res.status).toBe(500) // this is wrong!!!!!!!
-  })
-  it('should get back an existing book', async () => {
-    let res = await createBook()
-    expect(res.status).toBe(200)
-
-    const bookId = res.body._id
-    res = await request(app).get(`/api/v1/books/${bookId}`)
-
-    expect(res.body._id).toEqual(bookId)
-  })
-  it('should not get back a non-existing book', async () => {
-    const res = await request(app).get(`/api/v1/books/${nonExistingBookId}`)
-    expect(res.status).toBe(404)
   })
   it('should update an existing author', async () => {
     let res = await createBook()
@@ -103,7 +105,7 @@ describe('book controller', () => {
 
     expect(res.status).toEqual(204)
 
-    res = await request(app).get(`/api/v1/users/${bookId}`)
+    res = await request(app).get(`/api/v1/books/${bookId}`)
     expect(res.status).toBe(404)
   })
 })

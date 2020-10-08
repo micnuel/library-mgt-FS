@@ -65,7 +65,22 @@ describe('user controller', () => {
     const res = await request(app).get(`/api/v1/users/${nonExistingUserId}`)
     expect(res.status).toBe(404)
   })
+  it('should get back all user', async () => {
+    const reply1 = await createUser({
+      firstName: 'Angrybirds 1',
+      username: '123',
+    })
+    const reply2 = await createUser({
+      firstName: 'Angrybirds 2',
+      username: '321',
+    })
 
+    const res3 = await request(app).get(`/api/v1/users`)
+
+    expect(res3.body.length).toEqual(2)
+    expect(res3.body[0]._id).toEqual(reply1.body._id)
+    expect(res3.body[1]._id).toEqual(reply2.body._id)
+  })
   it('should update an existing user', async () => {
     let res = await createUser()
     expect(res.status).toBe(200)
@@ -93,19 +108,5 @@ describe('user controller', () => {
 
     res = await request(app).get(`/api/v1/users/${userId}`)
     expect(res.status).toBe(404)
-  })
-  it('should get back all user', async () => {
-    const reply1 = await createUser({
-      firstName: 'Angrybirds 1',
-    })
-    /*  const reply2 = await createUser({
-      firstName: 'Angrybirds 2',
-    }) */
-
-    const res3 = await request(app).get(`/api/v1/users`)
-
-    expect(res3.body.length).toEqual(1) // this is wrong
-    expect(res3.body[0]._id).toEqual(reply1.body._id)
-    //expect(res3.body[1]._id).toEqual(reply2.body._id)
   })
 })

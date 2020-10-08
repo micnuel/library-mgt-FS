@@ -36,7 +36,7 @@ export const createBook = async (
     await BookService.create(book)
     res.json(book)
   } catch (error) {
-    if (error.name === 'ValidatorError') {
+    if (error.name === 'ValidationError') {
       next(new BadRequestError('Invalid Request', error))
     } else {
       next(new InternalServerError('Internal Server Error', error))

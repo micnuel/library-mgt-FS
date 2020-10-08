@@ -15,11 +15,11 @@ export const createUser = async (
   next: NextFunction
 ) => {
   try {
-    const { firstName, lastName, userName, email, password, role } = req.body
+    const { firstName, lastName, username, email, password, role } = req.body
     const user = new User({
       firstName,
       lastName,
-      userName,
+      username,
       email,
       role,
       password,
@@ -30,6 +30,7 @@ export const createUser = async (
     if (error.name === 'ValidationError') {
       next(new BadRequestError('Invalid Request', error))
     } else {
+      console.log(error)
       next(new InternalServerError('Internal Server Error', error))
     }
   }
