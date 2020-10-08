@@ -5,7 +5,7 @@ function create(book: BookDocument): Promise<BookDocument> {
 }
 
 function findAll(): Promise<BookDocument[]> {
-  return Book.find().sort({ firstName: 1 }).exec()
+  return Book.find().exec()
 }
 
 function findById(bookId: string): Promise<BookDocument> {

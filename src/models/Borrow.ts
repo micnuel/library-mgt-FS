@@ -1,11 +1,14 @@
 import mongoose, { Document, mongo } from 'mongoose'
 
+import { BookDocument } from '../models/Book'
+import { UserDocument } from '../models/User'
+
 export type BorrowDocument = Document & {
-  borrowerId: string
-  bookId: string
-  status: string
-  borrowDate: Date
-  returnDate: Date
+  borrowerId: UserDocument[];
+  bookId: BookDocument[];
+  status: string;
+  borrowDate: Date;
+  returnDate: Date;
 }
 
 const borrowSchema = new mongoose.Schema({

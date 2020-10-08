@@ -5,10 +5,10 @@ import { AuthorDocument } from './Author'
 export type BookDocument = Document & {
   name: string;
   isbn: string;
-  publisher: string[];
+  publisher: string;
   description: string;
   status: string;
-  publishedYear: string;
+  publishedYear: number;
   category: string[];
   author: AuthorDocument[];
 }
