@@ -69,10 +69,12 @@ describe('user controller', () => {
     const reply1 = await createUser({
       firstName: 'Angrybirds 1',
       username: '123',
+      email: 'test@test.com',
     })
     const reply2 = await createUser({
       firstName: 'Angrybirds 2',
       username: '321',
+      email: 'test@testt.com',
     })
 
     const res3 = await request(app).get(`/api/v1/users`)

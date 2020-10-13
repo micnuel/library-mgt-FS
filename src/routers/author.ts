@@ -1,5 +1,5 @@
 import express from 'express'
-
+import { checkAuth } from '../middlewares/checkAuth'
 import {
   createAuthor,
   findById,
@@ -15,6 +15,6 @@ router.get('/', findAll)
 router.get('/:authorId', findById)
 router.put('/:authorId', updateAuthor)
 router.delete('/:authorId', deleteAuthor)
-router.post('/', createAuthor)
+router.post('/', checkAuth, createAuthor)
 
 export default router

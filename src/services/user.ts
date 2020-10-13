@@ -1,3 +1,5 @@
+import bcrypt from 'bcrypt'
+
 import User, { UserDocument } from '../models/User'
 
 function create(user: UserDocument): Promise<UserDocument> {
@@ -55,10 +57,26 @@ function update(
       return user.save()
     })
 }
+function login(username: string, password: string): Promise<UserDocument> {
+  return User.findOne({ username: username })
+    .exec()
+    .then((user) => {
+      if (!user) {
+        throw new Error(`User ${username} not found`)
+      }
+      bcrypt.compare(password, user.password, (err, result) => {
+        if (!result) throw new Error(`User ${username} not found`)
+        console.log(result)
+        return result
+      })
+      return user
+    }) //how to get token?
+}
 export default {
   create,
   findAll,
   update,
   deleteUser,
   findById,
+  login,
 }

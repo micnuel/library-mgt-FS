@@ -1,4 +1,7 @@
 import { Request, Response, NextFunction } from 'express'
+import jwt from 'jsonwebtoken'
+const sgMail = require('@sendgrid/mail')
+sgMail.setApiKey(process.env.SENDGRID_API_KEY)
 
 import User from '../models/User'
 import UserService from '../services/user'
@@ -6,8 +9,9 @@ import {
   NotFoundError,
   BadRequestError,
   InternalServerError,
+  ForbiddenError,
 } from '../helpers/apiError'
-import request from 'request'
+import { JWT_SECRET } from '../util/secrets'
 
 export const createUser = async (
   req: Request,
@@ -24,6 +28,7 @@ export const createUser = async (
       role,
       password,
     })
+
     await UserService.create(user)
     res.json(user)
   } catch (error) {
@@ -85,5 +90,31 @@ export const findById = async (
     res.json(await UserService.findById(req.params.userId))
   } catch (error) {
     next(new NotFoundError('User not found', error))
+  }
+}
+export const login = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const { username, password } = req.body
+  const user = await UserService.login(username, password)
+  if (!user) {
+    return next(new ForbiddenError())
+  }
+  try {
+    const token = await jwt.sign(
+      {
+        username: username,
+      },
+      JWT_SECRET,
+      {
+        expiresIn: '1h',
+      }
+    )
+    console.log(token)
+    res.json({ token, user })
+  } catch (error) {
+    return next(new InternalServerError())
   }
 }

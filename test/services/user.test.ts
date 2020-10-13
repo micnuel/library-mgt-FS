@@ -37,7 +37,6 @@ describe('user service', () => {
     expect(user).toHaveProperty('email', 'test@test.com')
     expect(user).toHaveProperty('role', 'normal')
     expect(user).toHaveProperty('username', 'user')
-    expect(user).toHaveProperty('password', 'password')
   })
   it('should find all Users', async () => {
     const user = await createUser()
@@ -74,7 +73,6 @@ describe('user service', () => {
     expect(updated).toHaveProperty('lastName', 'June')
     expect(updated).toHaveProperty('username', 'users')
     expect(updated).toHaveProperty('role', 'admin')
-    expect(updated).toHaveProperty('password', 'passwords')
     expect(updated).toHaveProperty('email', 'test123@test.com')
   })
   it('should not update a non-existing user', async () => {
