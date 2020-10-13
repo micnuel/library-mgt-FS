@@ -1,13 +1,11 @@
 import jwt from 'jsonwebtoken'
 import { Request, Response, NextFunction } from 'express'
 const sgMail = require('@sendgrid/mail')
-import bcrypt from 'bcrypt'
 import _ from 'lodash'
 
 import { JWT_SECRET } from '../util/secrets'
 import { ForbiddenError } from '../helpers/apiError'
 import User, { UserDocument } from '../models/User'
-import UserService from '../services/user'
 
 export const checkAuth = async (
   req: Request,

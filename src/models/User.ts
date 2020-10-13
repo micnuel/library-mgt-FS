@@ -65,7 +65,7 @@ userSchema.pre('save', function (next) {
   this._update.password = bcrypt.hashSync(this._update.password, 10)
 }) */
 
-userSchema.methods.comparePassword = function (
+/* userSchema.methods.comparePassword = function (
   candidatePassword: any,
   cb: any
 ) {
@@ -73,6 +73,6 @@ userSchema.methods.comparePassword = function (
     if (err) return cb(err)
     cb(null, isMatch)
   })
-}
+} */
 
 export default mongoose.model<UserDocument>('User', userSchema)
