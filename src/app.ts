@@ -1,4 +1,5 @@
 import express from 'express'
+import cors from 'cors'
 import compression from 'compression'
 import session from 'express-session'
 import bodyParser from 'body-parser'
@@ -22,6 +23,7 @@ import apiErrorHandler from './middlewares/apiErrorHandler'
 import apiContentType from './middlewares/apiContentType'
 
 const app = express()
+app.use(cors())
 const mongoUrl = MONGODB_URI
 
 mongoose.Promise = bluebird
