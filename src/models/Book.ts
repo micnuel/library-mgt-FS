@@ -49,4 +49,8 @@ const bookSchema = new mongoose.Schema({
   publishedYear: Number,
 })
 
+/* bookSchema.post('save', async (doc) => {
+  return await doc.populate('author').execPopulate()
+}) */
+
 export default mongoose.model<BookDocument>('Book', bookSchema)

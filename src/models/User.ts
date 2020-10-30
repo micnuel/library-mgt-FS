@@ -10,6 +10,7 @@ export type UserDocument = Document & {
   role: string
   password: string
   username: string
+  resetLink: any
 }
 
 const userSchema = new mongoose.Schema({
@@ -20,7 +21,6 @@ const userSchema = new mongoose.Schema({
   },
   lastName: {
     type: String,
-    required: true,
   },
   username: {
     type: String,
@@ -45,6 +45,7 @@ const userSchema = new mongoose.Schema({
     default: '',
   },
 })
+
 userSchema.pre('save', function (next) {
   const user = this as UserDocument
 

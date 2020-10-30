@@ -57,15 +57,15 @@ function update(
       return user.save()
     })
 }
-function login(username: string, password: string): Promise<UserDocument> {
-  return User.findOne({ username: username })
+function login(email: string, password: string): Promise<UserDocument> {
+  return User.findOne({ email: email })
     .exec()
     .then((user) => {
       if (!user) {
-        throw new Error(`User ${username} not found`)
+        throw new Error(`User ${email} not found`)
       }
       bcrypt.compare(password, user.password, (err, result) => {
-        if (!result) throw new Error(`User ${username} not found`)
+        if (!result) throw new Error(`User ${email} not found`)
         console.log(result)
         return result
       })

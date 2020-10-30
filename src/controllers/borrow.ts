@@ -17,9 +17,7 @@ export const createBorrow = async (
     const borrow = new BorrowReturn({
       borrowerId,
       bookId,
-      status,
       borrowDate,
-      returnDate,
     })
     await BorrowService.create(borrow)
     res.json(borrow)

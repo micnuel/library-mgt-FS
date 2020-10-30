@@ -7,11 +7,13 @@ export const TOGGLE_DIALOG = 'TOGGLE_DIALOG'
 export const ADD_AUTHOR = 'ADD_AUTHOR'
 export const REMOVE_AUTHOR = 'REMOVE_AUTHOR'
 export const UPDATE_AUTHOR = 'UPDATE_AUTHOR'
+export const FETCH_AUTHORS = 'FETCH_AUTHORS'
 export type Author = {
-  id?: string
+  _id?: string
   firstName: string
   lastName: string
   books?: Book[]
+  token: any
 }
 export type AuthorState = {
   inTray: Author[]
@@ -22,6 +24,12 @@ export type AddAuthorAction = {
   type: typeof ADD_AUTHOR
   payload: {
     author: Author
+  }
+}
+export type SetAuthorAction = {
+  type: typeof FETCH_AUTHORS
+  payload: {
+    authors: Author[]
   }
 }
 
@@ -42,6 +50,7 @@ export type AuthorActions =
   | AddAuthorAction
   | RemoveAuthorAction
   | UpdateAuthorAction
+  | SetAuthorAction
 
 //Books
 export const ADD_BOOK = 'ADD_BOOK'
@@ -49,7 +58,7 @@ export const REMOVE_BOOK = 'REMOVE_BOOK'
 export const UPDATE_BOOK = 'UPDATE_BOOK'
 export const FETCH_BOOKS = 'FETCH_BOOKS'
 export type Book = {
-  id?: string
+  _id?: string
   name: string
   isbn: string
   category: string[]
@@ -96,22 +105,117 @@ export type BookActions =
   | UpdateBookAction
   | SetBookAction
 
-//User
-export type User = {
-  id: string
-  firstName: string
-  email: string
-}
+// Borrow
 
-//Borrow
-
+export const ADD_BORROW = 'ADD_BORROW'
+export const REMOVE_BORROW = 'REMOVE_BORROW'
+export const UPDATE_BORROW = 'UPDATE_BORROW'
+export const FETCH_BORROW = 'FETCH_BORROW'
 export type Borrow = {
-  id: string
-  borrowerId: string
-  bookId: Book[]
-  returnDate: Date
-  borrowDate: Date
+  _id?: string
+  borrowerId?: User[]
+  bookId?: Book[]
 }
+export type BorrowState = {
+  inTray: Borrow[]
+  borrow: Borrow[]
+}
+
+export type AddBorrowAction = {
+  type: typeof ADD_BORROW
+  payload: {
+    borrow: Borrow
+  }
+}
+//might remove this
+export type SetBorrowAction = {
+  type: typeof FETCH_BORROW
+  payload: {
+    borrow: Borrow[]
+  }
+}
+
+export type RemoveBorrowAction = {
+  type: typeof REMOVE_BORROW
+  payload: {
+    borrow: Borrow
+  }
+}
+
+export type UpdateBorrowAction = {
+  type: typeof UPDATE_BORROW
+  payload: {
+    borrow: Borrow
+  }
+}
+export type BorrowActions =
+  | AddBorrowAction
+  | RemoveBorrowAction
+  | UpdateBorrowAction
+  | SetBorrowAction
+
+//User
+export const ADD_USER = 'ADD_USER'
+export const REMOVE_USER = 'REMOVE_USER'
+export const UPDATE_USER = 'UPDATE_USER'
+export const FETCH_USERS = 'FETCH_USERS'
+export const LOGIN = 'LOGIN'
+export type User = {
+  _id?: string
+  firstName: string
+  lastName: string
+  email: string
+  password: string
+  role: string
+}
+export type Login = {
+  email: string
+  password: string
+}
+export type SetUserAction = {
+  type: typeof FETCH_USERS
+  payload: {
+    users: User[]
+  }
+}
+export type UserState = {
+  inTray: User[]
+  users: User[]
+  user?: User
+}
+
+export type AddUserAction = {
+  type: typeof ADD_USER
+  payload: {
+    user: User
+  }
+}
+export type loginAction = {
+  type: typeof LOGIN
+  payload: {
+    user: User
+  }
+}
+
+export type RemoveUserAction = {
+  type: typeof REMOVE_USER
+  payload: {
+    user: User
+  }
+}
+
+export type UpdateUserAction = {
+  type: typeof UPDATE_USER
+  payload: {
+    user: User
+  }
+}
+export type UserActions =
+  | AddUserAction
+  | RemoveUserAction
+  | UpdateUserAction
+  | SetUserAction
+  | loginAction
 
 // Enum
 export enum DialogType {
@@ -168,4 +272,6 @@ export type AppState = {
   ui: UiState
   author: AuthorState
   book: BookState
+  user: UserState
+  borrow: BorrowState
 }

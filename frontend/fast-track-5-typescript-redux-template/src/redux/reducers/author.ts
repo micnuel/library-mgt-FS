@@ -4,6 +4,7 @@ import {
   AuthorActions,
   REMOVE_AUTHOR,
   UPDATE_AUTHOR,
+  FETCH_AUTHORS,
 } from '../../types'
 
 export default function author(
@@ -17,6 +18,10 @@ export default function author(
     case ADD_AUTHOR: {
       const { author } = action.payload
       return { ...state, inTray: [...state.inTray, author] }
+    }
+    case FETCH_AUTHORS: {
+      const { authors } = action.payload
+      return { ...state, authors: [...authors] }
     }
     case REMOVE_AUTHOR:
     case UPDATE_AUTHOR:

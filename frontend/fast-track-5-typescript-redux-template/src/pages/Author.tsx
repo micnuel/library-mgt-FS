@@ -16,15 +16,26 @@ export function AddAuthor() {
     dispatch(fetchBooks())
   }, [dispatch])
 
-  const authors = useSelector((state: AppState) => state.author.inTray)
+  const authors = useSelector((state: AppState) => state.author)
   console.log(authors)
   const books = useSelector((state: AppState) => state.book)
-  console.log(books)
+  //const token = JSON.parse(localStorage.getItem('userInfo') as string).user['email']
+  const token = JSON.parse(localStorage.getItem('userInfo') as string)
+
+  // check for status code 403 (and when user is not logged as admin)
+  setTimeout(() => console.log(token), 2000)
   return (
     <div>
       <h1>Add An Author</h1>
       <Formik
-        initialValues={{ firstName: '', lastName: '', authors: [] }}
+        initialValues={{
+          firstName: '',
+          lastName: '',
+          token: `${
+            JSON.parse(localStorage.getItem('userInfo') as string).token
+          }`,
+          books: [],
+        }}
         validationSchema={yup.object({
           firstName: yup
             .string()
@@ -74,18 +85,25 @@ export function AddAuthor() {
             <div>
               <Select
                 native
-                value={props.values.authors}
-                //onChange={handleChange}
-                label="Authors"
+                multiple
+                onChange={props.handleChange}
+                label="books"
+                value={props.values.books}
+                name="books"
                 inputProps={{
-                  name: 'authors',
-                  id: 'outlined-age-native-simple',
+                  name: 'books',
                 }}
               >
-                <option aria-label="None" value="" />
-                <option value={10}>Ten</option>
+                {books.books.map((book) => {
+                  return (
+                    <option key={book._id} value={book._id}>
+                      {book.name}
+                    </option>
+                  )
+                })}
               </Select>
             </div>
+
             <Button type="submit">Submit</Button>
           </form>
         )}

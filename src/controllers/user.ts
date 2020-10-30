@@ -97,19 +97,19 @@ export const login = async (
   res: Response,
   next: NextFunction
 ) => {
-  const { username, password } = req.body
-  const user = await UserService.login(username, password)
+  const { email, password } = req.body
+  const user = await UserService.login(email, password)
   if (!user) {
     return next(new ForbiddenError())
   }
   try {
     const token = await jwt.sign(
       {
-        username: username,
+        email: email,
       },
       JWT_SECRET,
       {
-        expiresIn: '1h',
+        expiresIn: '10h',
       }
     )
     console.log(token)

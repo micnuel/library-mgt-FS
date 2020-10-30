@@ -6,9 +6,8 @@ const nonExistingBorrowId = '5e57b77b5744fa0b461c7906'
 
 async function createBorrow() {
   const borrow = new Borrow({
-    status: 'available',
     borrowDate: '2012-12-19',
-    returnDate: '2012-12-30',
+    status: 'available',
   })
   return await BorrowService.create(borrow)
 }
@@ -28,7 +27,6 @@ describe('borrow service', () => {
   it('should create a borrow', async () => {
     const borrow = await createBorrow()
     expect(borrow).toHaveProperty('_id')
-    expect(borrow).toHaveProperty('status', 'available')
     // expect(borrow).toHaveProperty('borrowDate', '2012-12-19')
   })
   it('should find all borrow', async () => {

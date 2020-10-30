@@ -5,7 +5,7 @@ function create(book: BookDocument): Promise<BookDocument> {
 }
 
 function findAll(): Promise<BookDocument[]> {
-  return Book.find().exec()
+  return Book.find().populate('author').exec()
 }
 
 function findById(bookId: string): Promise<BookDocument> {

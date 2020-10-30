@@ -26,5 +26,7 @@ const authorSchema = new mongoose.Schema({
     },
   ],
 })
-
+/* authorSchema.post('save', async (doc) => {
+  return await doc.populate('books').execPopulate()
+}) */
 export default mongoose.model<AuthorDocument>('Author', authorSchema)

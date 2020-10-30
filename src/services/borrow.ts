@@ -5,7 +5,11 @@ function create(borrow: BorrowDocument): Promise<BorrowDocument> {
 }
 
 function findAll(): Promise<BorrowDocument[]> {
-  return BorrowReturn.find().sort({ firstName: 1 }).exec()
+  return BorrowReturn.find()
+    .populate('borrowerId')
+    .populate('bookId')
+    .sort({ firstName: 1 })
+    .exec()
 }
 
 function findById(borrowId: string): Promise<BorrowDocument> {
@@ -39,14 +43,8 @@ function update(
       if (update.bookId) {
         borrow.bookId = update.bookId
       }
-      if (update.status) {
-        borrow.status = update.status
-      }
       if (update.borrowDate) {
         borrow.borrowDate = update.borrowDate
-      }
-      if (update.returnDate) {
-        borrow.returnDate = update.returnDate
       }
 
       return borrow.save()

@@ -1,59 +1,58 @@
 import { Dispatch } from 'redux'
 
-import { ADD_BOOK, Book, BookActions, FETCH_BOOKS, User } from '../../types'
+import { ADD_BORROW, Borrow, BorrowActions, FETCH_BORROW } from '../../types'
 
-export function addBook(book: Book): BookActions {
+export function addBorrow(borrow: Borrow): BorrowActions {
   return {
-    type: ADD_BOOK,
+    type: ADD_BORROW,
     payload: {
-      book,
+      borrow,
     },
   }
 }
-export function setBooks(books: Book[]): BookActions {
+export function setBorrow(borrow: Borrow[]): BorrowActions {
   return {
-    type: FETCH_BOOKS,
+    type: FETCH_BORROW,
     payload: {
-      books,
+      borrow,
     },
   }
 }
 // Async action processed by redux-thunk middleware
-export function createBook(book: Book) {
-  return (dispatch: Dispatch) => {
-    return fetch(`http://localhost:5000/api/v1/books`, {
-      method: 'POST',
-      headers: {
-        'Content-type': 'application/json',
-      },
-      body: JSON.stringify(book),
-    }).then((resp) => resp.json())
-  }
-}
-
-//remove
-export function borrowBookss() {
+export function createBorrow(borrow: Borrow) {
   return (dispatch: Dispatch) => {
     return fetch(`http://localhost:5000/api/v1/borrows`, {
       method: 'POST',
       headers: {
         'Content-type': 'application/json',
       },
-      body: JSON.stringify({}),
+      body: JSON.stringify(borrow),
+    }).then((resp) => resp.json())
+  }
+}
+
+export function borrowBook(borrow: Borrow) {
+  return (dispatch: Dispatch) => {
+    return fetch(`http://localhost:5000/api/v1/borrows`, {
+      method: 'POST',
+      headers: {
+        'Content-type': 'application/json',
+      },
+      body: JSON.stringify(borrow),
     })
       .then((resp) => resp.json())
-      .then((book) => {
-        dispatch(addBook(book)) // should this be books
+      .then((borrow) => {
+        dispatch(addBorrow(borrow))
       })
   }
 }
 
-export function fetchBooks() {
+export function fetchBorrows() {
   return (dispatch: Dispatch) => {
     return fetch(`http://localhost:5000/api/v1/books`)
       .then((resp) => resp.json())
       .then((books) => {
-        dispatch(setBooks(books))
+        dispatch(setBorrow(books))
       })
   }
 }

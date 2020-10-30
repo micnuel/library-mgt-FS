@@ -1,11 +1,14 @@
 import request from 'supertest'
-
+import { NextFunction } from 'express'
 import { AuthorDocument } from '../../src/models/Author'
 import app from '../../src/app'
 import * as dbHelper from '../db-helper'
 
+jest.mock(
+  '../../src/middlewares/checkAuth',
+  () => (req: Request, res: Response, next: NextFunction) => next()
+)
 const nonExistingAuthorId = '5e57b77b5744fa0b461c7906'
-
 async function createAuthor(override?: Partial<AuthorDocument>) {
   let author = {
     firstName: 'Emma',
@@ -16,7 +19,9 @@ async function createAuthor(override?: Partial<AuthorDocument>) {
     author = { ...author, ...override }
   }
 
-  return await request(app).post('/api/v1/authors').send(author)
+  return await request(app)
+    .post('/api/v1/authors') // check why the error
+    .send(author)
 }
 describe('author controller', () => {
   beforeEach(async () => {

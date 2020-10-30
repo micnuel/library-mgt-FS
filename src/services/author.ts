@@ -5,12 +5,10 @@ function create(author: AuthorDocument): Promise<AuthorDocument> {
 }
 
 function findAll(): Promise<AuthorDocument[]> {
-  return (
-    Author.find()
-      //.populate('books') // gets all the books
-      .sort({ firstName: 1 })
-      .exec()
-  )
+  return Author.find()
+    .populate('books') // gets all the books
+    .sort({ firstName: 1 })
+    .exec()
 }
 
 function findById(authorId: string): Promise<AuthorDocument> {

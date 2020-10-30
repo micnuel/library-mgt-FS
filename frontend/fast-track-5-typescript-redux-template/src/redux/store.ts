@@ -21,6 +21,14 @@ const initState: AppState = {
     inTray: [],
     books: [],
   },
+  user: {
+    inTray: [],
+    users: [],
+  },
+  borrow: {
+    inTray: [],
+    borrow: [],
+  },
 }
 
 export default function makeStore(initialState = initState) {

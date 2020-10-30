@@ -10,7 +10,6 @@ async function createBorrow(override?: Partial<BorrowDocument>) {
   let borrow = {
     status: 'available',
     borrowDate: new Date('1987-10-26'),
-    returnDate: new Date('1987-11-26'), // this is mongoose date
   }
 
   if (override) {
@@ -61,12 +60,10 @@ describe('borrow controller', () => {
     const res1 = await createBorrow({
       status: 'available',
       borrowDate: new Date('1987-10-26'),
-      returnDate: new Date('1987-11-26'),
     })
     const res2 = await createBorrow({
       status: 'available',
       borrowDate: new Date('1987-10-11'),
-      returnDate: new Date('1987-12-13'),
     })
 
     const res3 = await request(app).get(`/api/v1/borrows`)
