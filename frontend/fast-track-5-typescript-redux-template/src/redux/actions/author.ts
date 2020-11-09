@@ -1,10 +1,24 @@
 import { Dispatch } from 'redux'
 
-import { ADD_AUTHOR, Author, AuthorActions, FETCH_AUTHORS } from '../../types'
+import {
+  ADD_AUTHOR,
+  Author,
+  AuthorActions,
+  FETCH_AUTHORS,
+  UPDATE_AUTHOR,
+} from '../../types'
 
 export function addAuthor(author: Author): AuthorActions {
   return {
     type: ADD_AUTHOR,
+    payload: {
+      author,
+    },
+  }
+}
+export function updateAuthor(author: Author): AuthorActions {
+  return {
+    type: UPDATE_AUTHOR,
     payload: {
       author,
     },
@@ -34,6 +48,21 @@ export function setAuthors(authors: Author[]): AuthorActions {
     payload: {
       authors,
     },
+  }
+}
+export function fetchAuthorUpdate(update: Partial<Author>, authorId?: string) {
+  return (dispatch: Dispatch) => {
+    return fetch(`http://localhost:5000/api/v1/authors/${authorId}`, {
+      method: 'PUT',
+      headers: {
+        'Content-type': 'application/json',
+      },
+      body: JSON.stringify(update),
+    })
+      .then((resp) => resp.json())
+      .then((authors) => {
+        dispatch(updateAuthor(authors))
+      })
   }
 }
 

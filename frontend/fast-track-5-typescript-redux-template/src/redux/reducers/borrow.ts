@@ -16,18 +16,27 @@ export default function borrow(
 ): BorrowState {
   switch (action.type) {
     case ADD_BORROW: {
-      const { borrow } = action.payload
-      if (state.inTray.find((p) => p._id === borrow._id)) {
+      const { bookId } = action.payload
+      if (state.inTray.find((p) => p._id === bookId._id)) {
         return state
       }
-      return { ...state, inTray: [...state.inTray, borrow] }
+      return { ...state, inTray: [...state.inTray, bookId] }
     }
     case FETCH_BORROW: {
       const { borrow } = action.payload
       return { ...state, borrow: [...borrow] }
     }
 
-    case REMOVE_BORROW:
+    case REMOVE_BORROW: {
+      //deletes all books...hard to access books!
+      const { bookId } = action.payload
+      const index = state.borrow.findIndex((p) => p._id === bookId._id)
+      if (index >= 0) {
+        state.borrow.splice(index, 1)
+        return { ...state, borrow: [...state.borrow] }
+      }
+      return state
+    }
     case UPDATE_BORROW:
 
     default:

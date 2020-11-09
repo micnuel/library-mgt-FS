@@ -1,22 +1,24 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Formik } from 'formik'
-import { useDispatch, useSelector } from 'react-redux'
-import { TextField, Button, Select } from '@material-ui/core'
+import { useDispatch } from 'react-redux'
+import { Form } from 'semantic-ui-react'
 import * as yup from 'yup'
+import { useHistory } from 'react-router-dom'
 
-import { createAuthor } from '../redux/actions/author'
-import { AppState } from '../types'
-import { userLogin } from '../redux/actions'
-import { Header } from '../components/header/header'
+import { userLogin } from '../redux/actions/user'
 
 export function Login() {
+  const history = useHistory()
   const dispatch = useDispatch()
-  const users = useSelector((state: AppState) => state.user)
-  console.log(users)
-  console.log(localStorage)
+  const user = JSON.parse(localStorage.getItem('userInfo') as string)
+    ? JSON.parse(localStorage.getItem('userInfo') as string).user['role']
+    : ''
+  const handleLogin = () => {
+    if (user === 'admin') return history.push('/admin')
+    if (user === 'normal') return history.push('/borrowed')
+  }
   return (
     <div>
-      <Header />
       <h1>Login Page</h1>
       <Formik
         initialValues={{ email: '', password: '' }}
@@ -31,15 +33,16 @@ export function Login() {
             .required('required field'),
         })}
         onSubmit={(values, { setSubmitting, resetForm }) => {
-          alert(JSON.stringify(values, null, 2))
+          JSON.stringify(values, null, 2)
           dispatch(userLogin(values))
           resetForm()
+          handleLogin()
         }}
       >
         {(props) => (
-          <form onSubmit={props.handleSubmit}>
-            <div>
-              <TextField
+          <Form onSubmit={props.handleSubmit}>
+            <Form.Group widths="equal">
+              <Form.Input
                 placeholder="email"
                 type="text"
                 onChange={props.handleChange}
@@ -50,9 +53,7 @@ export function Login() {
               {props.errors.email && (
                 <div id="feedback">{props.errors.email}</div>
               )}
-            </div>
-            <div>
-              <TextField
+              <Form.Input
                 placeholder="password"
                 type="password"
                 onChange={props.handleChange}
@@ -63,9 +64,10 @@ export function Login() {
               {props.errors.password && (
                 <div id="feedback">{props.errors.password}</div>
               )}
-            </div>
-            <Button type="submit">Login</Button>
-          </form>
+            </Form.Group>
+
+            <Form.Button type="submit">Login</Form.Button>
+          </Form>
         )}
       </Formik>
     </div>

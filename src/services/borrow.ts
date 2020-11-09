@@ -12,12 +12,16 @@ function findAll(): Promise<BorrowDocument[]> {
     .exec()
 }
 
-function findById(borrowId: string): Promise<BorrowDocument> {
-  return BorrowReturn.findById(borrowId)
+function findById(
+  borrowerId: string
+): Promise<BorrowDocument | BorrowDocument[]> {
+  return BorrowReturn.find(borrowerId)
+    .select('book -_id')
+    .populate('bookId')
     .exec()
     .then((borrow) => {
       if (!borrow) {
-        throw new Error(`Borrow ${borrowId} not found`)
+        throw new Error(`Borrow ${borrowerId} not found`)
       }
       return borrow
     })

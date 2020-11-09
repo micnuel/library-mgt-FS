@@ -7,23 +7,20 @@ import createRootReducer from './reducers'
 import rootSaga from './sagas'
 
 const initState: AppState = {
-  product: {
-    inCart: [],
-  },
-  ui: {
-    dialogOpen: {},
-  },
   author: {
     inTray: [],
     authors: [],
+    update: [],
   },
   book: {
     inTray: [],
     books: [],
+    update: [],
   },
   user: {
     inTray: [],
     users: [],
+    update: [],
   },
   borrow: {
     inTray: [],
@@ -41,7 +38,10 @@ export default function makeStore(initialState = initState) {
       composeEnhancers = (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
     }
   }
-
+  const localStorageState = localStorage.getItem('library-state')
+  if (localStorageState) {
+    initialState = JSON.parse(localStorageState)
+  }
   const store = createStore(
     createRootReducer(),
     initialState,

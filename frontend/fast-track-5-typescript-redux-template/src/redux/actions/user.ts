@@ -26,7 +26,6 @@ export function createUser(user: User) {
       method: 'POST',
       headers: {
         'Content-type': 'application/json',
-        //authorization: '123',
       },
       body: JSON.stringify(user),
     })

@@ -12,6 +12,7 @@ export default function user(
     users: [],
     inTray: [],
     user: undefined,
+    update: [],
   },
   action: UserActions
 ): UserState {

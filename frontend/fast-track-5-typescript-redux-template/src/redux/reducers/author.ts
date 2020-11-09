@@ -11,6 +11,7 @@ export default function author(
   state: AuthorState = {
     authors: [],
     inTray: [],
+    update: [],
   },
   action: AuthorActions
 ): AuthorState {
@@ -23,8 +24,10 @@ export default function author(
       const { authors } = action.payload
       return { ...state, authors: [...authors] }
     }
-    case REMOVE_AUTHOR:
-    case UPDATE_AUTHOR:
+    case UPDATE_AUTHOR: {
+      const { author } = action.payload
+      return { ...state, update: [author] }
+    }
     default:
       return state
   }

@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { Formik } from 'formik'
 import { useDispatch, useSelector } from 'react-redux'
-import { TextField, Button, Select } from '@material-ui/core'
+import { Form } from 'semantic-ui-react'
 import * as yup from 'yup'
 
 import { createUser } from '../redux/actions/user'
 import { AppState } from '../types'
+import { Header } from '../components/header/header'
 
 export function Register() {
   const dispatch = useDispatch()
@@ -15,6 +16,7 @@ export function Register() {
 
   return (
     <div>
+      <Header />
       <h1>User Registration</h1>
       <Formik
         initialValues={{
@@ -50,9 +52,9 @@ export function Register() {
         }}
       >
         {(props) => (
-          <form onSubmit={props.handleSubmit}>
-            <div>
-              <TextField
+          <Form onSubmit={props.handleSubmit}>
+            <Form.Group>
+              <Form.Input
                 placeholder="firstName"
                 type="text"
                 onChange={props.handleChange}
@@ -63,9 +65,7 @@ export function Register() {
               {props.errors.firstName && (
                 <div id="feedback">{props.errors.firstName}</div>
               )}
-            </div>
-            <div>
-              <TextField
+              <Form.Input
                 placeholder="lastName"
                 type="text"
                 onChange={props.handleChange}
@@ -76,9 +76,9 @@ export function Register() {
               {props.errors.lastName && (
                 <div id="feedback">{props.errors.lastName}</div>
               )}
-            </div>
-            <div>
-              <TextField
+            </Form.Group>
+            <Form.Group>
+              <Form.Input
                 placeholder="lastName"
                 type="text"
                 onChange={props.handleChange}
@@ -89,9 +89,7 @@ export function Register() {
               {props.errors.lastName && (
                 <div id="feedback">{props.errors.lastName}</div>
               )}
-            </div>
-            <div>
-              <TextField
+              <Form.Input
                 placeholder="username"
                 type="text"
                 onChange={props.handleChange}
@@ -102,9 +100,9 @@ export function Register() {
               {props.errors.username && (
                 <div id="feedback">{props.errors.username}</div>
               )}
-            </div>
-            <div>
-              <TextField
+            </Form.Group>
+            <Form.Group>
+              <Form.Input
                 placeholder="email"
                 type="text"
                 onChange={props.handleChange}
@@ -115,9 +113,7 @@ export function Register() {
               {props.errors.email && (
                 <div id="feedback">{props.errors.email}</div>
               )}
-            </div>
-            <div>
-              <TextField
+              <Form.Input
                 placeholder="password"
                 type="password"
                 onChange={props.handleChange}
@@ -128,9 +124,9 @@ export function Register() {
               {props.errors.password && (
                 <div id="feedback">{props.errors.password}</div>
               )}
-            </div>
-            <div>
-              <TextField
+            </Form.Group>
+            <Form.Group>
+              <Form.Input
                 placeholder="confirm password"
                 type="password"
                 onChange={props.handleChange}
@@ -141,10 +137,10 @@ export function Register() {
               {props.errors.passwordConfirmation && (
                 <div id="feedback">{props.errors.passwordConfirmation}</div>
               )}
-            </div>
 
-            <Button type="submit">Submit</Button>
-          </form>
+              <Form.Button type="submit">Register</Form.Button>
+            </Form.Group>
+          </Form>
         )}
       </Formik>
     </div>

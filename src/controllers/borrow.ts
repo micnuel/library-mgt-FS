@@ -76,7 +76,7 @@ export const findById = async (
   next: NextFunction
 ) => {
   try {
-    res.json(await BorrowService.findById(req.params.borrowId))
+    res.json(await BorrowService.findById(req.params.borrowerId))
   } catch (error) {
     next(new NotFoundError('Borrow not found', error))
   }

@@ -18,6 +18,7 @@ export type Author = {
 export type AuthorState = {
   inTray: Author[]
   authors: Author[]
+  update: Author[]
 }
 
 export type AddAuthorAction = {
@@ -77,6 +78,7 @@ export type SetBookAction = {
 export type BookState = {
   inTray: Book[]
   books: Book[]
+  update: Book[]
 }
 
 export type AddBookAction = {
@@ -112,9 +114,9 @@ export const REMOVE_BORROW = 'REMOVE_BORROW'
 export const UPDATE_BORROW = 'UPDATE_BORROW'
 export const FETCH_BORROW = 'FETCH_BORROW'
 export type Borrow = {
-  _id?: string
-  borrowerId?: User[]
-  bookId?: Book[]
+  _id: string
+  borrowerId: User[]
+  bookId: Book[]
 }
 export type BorrowState = {
   inTray: Borrow[]
@@ -122,9 +124,10 @@ export type BorrowState = {
 }
 
 export type AddBorrowAction = {
+  //remove
   type: typeof ADD_BORROW
   payload: {
-    borrow: Borrow
+    bookId: Borrow
   }
 }
 //might remove this
@@ -138,7 +141,7 @@ export type SetBorrowAction = {
 export type RemoveBorrowAction = {
   type: typeof REMOVE_BORROW
   payload: {
-    borrow: Borrow
+    bookId: Borrow
   }
 }
 
@@ -182,6 +185,7 @@ export type UserState = {
   inTray: User[]
   users: User[]
   user?: User
+  update: User[]
 }
 
 export type AddUserAction = {
@@ -217,59 +221,7 @@ export type UserActions =
   | SetUserAction
   | loginAction
 
-// Enum
-export enum DialogType {
-  SignIn = 'signIn',
-  SignUp = 'signUp',
-}
-
-// A product
-export type Product = {
-  id: string
-  name: string
-  price: number
-}
-
-export type AddProductAction = {
-  type: typeof ADD_PRODUCT
-  payload: {
-    product: Product
-  }
-}
-
-export type RemoveProductAction = {
-  type: typeof REMOVE_PRODUCT
-  payload: {
-    product: Product
-  }
-}
-
-export type ToggleDialogAction = {
-  type: typeof TOGGLE_DIALOG
-  payload: {
-    dialog: DialogType
-  }
-}
-
-export type UiActions = ToggleDialogAction
-
-// Use this union in reducer
-export type ProductActions = AddProductAction | RemoveProductAction
-
-export type ProductState = {
-  inCart: Product[]
-}
-
-// Using dynamic keys from an enum
-export type UiState = {
-  dialogOpen: {
-    [key in DialogType]?: boolean
-  }
-}
-
 export type AppState = {
-  product: ProductState
-  ui: UiState
   author: AuthorState
   book: BookState
   user: UserState

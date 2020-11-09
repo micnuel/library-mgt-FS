@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from 'react'
-import { useHistory } from 'react-router-dom'
 import { Formik } from 'formik'
+import { useParams, useHistory } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { Form } from 'semantic-ui-react'
 import * as yup from 'yup'
 
-import { createBook } from '../redux/actions/book'
+import { fetchUpdate } from '../redux/actions/book'
 import { AppState } from '../types'
+import { fetchAuthors } from '../redux/actions/author'
 import { Header } from '../components/header/header'
 
-export function AddBook() {
+export function UpdateBook() {
   const options = [
     { key: 'm', text: 'Programming', value: 'Programming' },
     { key: 'f', text: 'Science', value: 'Science' },
@@ -17,24 +18,28 @@ export function AddBook() {
   ]
   const history = useHistory()
   const dispatch = useDispatch()
-  const [book, setBook] = useState([])
+  const { id } = useParams()
+  useEffect(() => {
+    dispatch(fetchAuthors())
+  }, [dispatch])
 
   const authors = useSelector((state: AppState) => state.author)
+  const book = useSelector((state: AppState) => state.book.update)
 
   return (
     <div>
       <Header />
-      <h1>Add A Book</h1>
+      <h1>Update A Book</h1>
       <Formik
         initialValues={{
-          name: '',
-          isbn: '',
-          category: [],
-          publisher: '',
-          description: '',
+          name: book[0].name,
+          isbn: book[0].isbn,
+          category: book[0].category,
+          publisher: book[0].publisher,
+          description: book[0].description,
           status: 'available',
-          author: [],
-          publishedYear: 0,
+          author: book[0].authors,
+          publishedYear: book[0].publishedYear,
         }}
         validationSchema={yup.object({
           name: yup
@@ -54,7 +59,7 @@ export function AddBook() {
         })}
         onSubmit={(values, { setSubmitting, resetForm }) => {
           JSON.stringify(values, null, 2)
-          dispatch(createBook(values))
+          dispatch(fetchUpdate(values, id))
           history.push('/admin')
           resetForm()
         }}
@@ -156,7 +161,7 @@ export function AddBook() {
               {props.errors.publishedYear && (
                 <div id="feedback">{props.errors.publishedYear}</div>
               )}
-              <Form.Button type="submit">Submit</Form.Button>
+              <Form.Button type="submit">Update</Form.Button>
             </Form.Group>
           </Form>
         )}

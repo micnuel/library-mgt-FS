@@ -1,16 +1,19 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { Formik } from 'formik'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Form } from 'semantic-ui-react'
+import { useParams } from 'react-router-dom'
 import * as yup from 'yup'
 
-import { createAuthor } from '../redux/actions/author'
 import { Header } from '../components/header/header'
+import { AppState } from '../types'
+import { fetchAuthorUpdate } from '../redux/actions/author'
 
-export function AddAuthor() {
+export function UpdateAuthor() {
+  const { id } = useParams()
   const dispatch = useDispatch()
-  const [book, setBook] = useState([])
   const token = JSON.parse(localStorage.getItem('userInfo') as string)
+  const author = useSelector((state: AppState) => state.author.update)
 
   // check for status code 403 (and when user is not logged as admin)
   setTimeout(() => console.log(token), 2000)
@@ -40,8 +43,8 @@ export function AddAuthor() {
             .required('required field'),
         })}
         onSubmit={(values, { setSubmitting, resetForm }) => {
-          JSON.stringify(values, null, 2)
-          dispatch(createAuthor(values))
+          alert(JSON.stringify(values, null, 2))
+          dispatch(fetchAuthorUpdate(values, id))
           resetForm()
         }}
       >
