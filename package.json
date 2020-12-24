@@ -102,11 +102,6 @@
     "ts-node": "^8.6.2",
     "typescript": "^3.8.2"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
   "lint-staged": {
     "./src/**/*.{js,jsx,ts,tsx}": [
       "npx prettier --write",
