@@ -1,4 +1,4 @@
-import Author, { AuthorDocument } from '../models/author'
+import Author, { AuthorDocument } from '../models/Author'
 
 function create(author: AuthorDocument): Promise<AuthorDocument> {
   return author.save()
