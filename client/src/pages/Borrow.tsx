@@ -50,7 +50,7 @@ export default function Borrows() {
       <Header />
       {
         <DataTable
-          title="List of Books"
+          title="List of Borrowed Books"
           columns={tableHeader}
           data={uBorrow[0]}
           striped={true}
