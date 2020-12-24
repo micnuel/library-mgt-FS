@@ -41,9 +41,6 @@
     "eject": "react-scripts eject",
     "lint": "eslint --fix '**/*.{ts,tsx}'"
   },
-  "eslintConfig": {
-    "extends": "react-app"
-  },
   "browserslist": {
     "production": [
       ">0.2%",
