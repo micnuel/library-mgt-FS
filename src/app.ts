@@ -23,6 +23,7 @@ import apiErrorHandler from './middlewares/apiErrorHandler'
 import apiContentType from './middlewares/apiContentType'
 
 const app = express()
+app.use(express.static('build'))
 app.use(cors())
 const mongoUrl = MONGODB_URI
 

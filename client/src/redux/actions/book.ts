@@ -45,7 +45,7 @@ export function setBooks(books: Book[]): BookActions {
 // Async action processed by redux-thunk middleware
 export function createBook(book: Book) {
   return (dispatch: Dispatch) => {
-    return fetch(`http://localhost:5000/api/v1/books`, {
+    return fetch(`https://salty-atoll-28842.herokuapp.com/api/v1/books`, {
       method: 'POST',
       headers: {
         'Content-type': 'application/json',
@@ -57,17 +57,20 @@ export function createBook(book: Book) {
 
 export function deleteBook(bookId?: string) {
   return (dispatch: Dispatch) => {
-    return fetch(`http://localhost:5000/api/v1/books/${bookId}`, {
-      method: 'DELETE',
-      headers: {
-        'Content-type': 'application/json',
-      },
-    }).then((resp) => alert(resp.status))
+    return fetch(
+      `https://salty-atoll-28842.herokuapp.com/api/v1/books/${bookId}`,
+      {
+        method: 'DELETE',
+        headers: {
+          'Content-type': 'application/json',
+        },
+      }
+    ).then((resp) => alert(resp.status))
   }
 }
 export function borrowBookss() {
   return (dispatch: Dispatch) => {
-    return fetch(`http://localhost:5000/api/v1/borrows`, {
+    return fetch(`https://salty-atoll-28842.herokuapp.com/api/v1/books`, {
       method: 'POST',
       headers: {
         'Content-type': 'application/json',
@@ -83,7 +86,7 @@ export function borrowBookss() {
 
 export function fetchBooks() {
   return (dispatch: Dispatch) => {
-    return fetch(`http://localhost:5000/api/v1/books`)
+    return fetch(`https://salty-atoll-28842.herokuapp.com/api/v1/books`)
       .then((resp) => resp.json())
       .then((books) => {
         dispatch(setBooks(books))
@@ -93,13 +96,16 @@ export function fetchBooks() {
 
 export function fetchUpdate(update: Partial<Book>, bookId?: string) {
   return (dispatch: Dispatch) => {
-    return fetch(`http://localhost:5000/api/v1/books/${bookId}`, {
-      method: 'PUT',
-      headers: {
-        'Content-type': 'application/json',
-      },
-      body: JSON.stringify(update),
-    })
+    return fetch(
+      `https://salty-atoll-28842.herokuapp.com/api/v1/books/${bookId}`,
+      {
+        method: 'PUT',
+        headers: {
+          'Content-type': 'application/json',
+        },
+        body: JSON.stringify(update),
+      }
+    )
       .then((resp) => resp.json())
       .then((books) => {
         dispatch(updateBook(books))

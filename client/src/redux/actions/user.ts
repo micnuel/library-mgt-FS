@@ -22,7 +22,7 @@ export function login(user: User): UserActions {
 // Async action processed by redux-thunk middleware
 export function createUser(user: User) {
   return (dispatch: Dispatch) => {
-    return fetch(`http://localhost:5000/api/v1/users`, {
+    return fetch(`https://salty-atoll-28842.herokuapp.com/api/v1/users`, {
       method: 'POST',
       headers: {
         'Content-type': 'application/json',
@@ -38,7 +38,7 @@ export function createUser(user: User) {
 
 export function userLogin(user: Login) {
   return (dispatch: Dispatch) => {
-    return fetch(`http://localhost:5000/api/v1/users/login`, {
+    return fetch(`https://salty-atoll-28842.herokuapp.com/api/v1/users/login`, {
       method: 'POST',
       headers: {
         'Content-type': 'application/json',

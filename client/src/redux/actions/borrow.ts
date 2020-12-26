@@ -39,7 +39,7 @@ const user = JSON.parse(localStorage.getItem('userInfo') as string)
 // Async action processed by redux-thunk middleware
 export function createBorrow(bookId: any, borrowerId: any = user) {
   return (dispatch: Dispatch) => {
-    return fetch(`http://localhost:5000/api/v1/borrows`, {
+    return fetch(`https://salty-atoll-28842.herokuapp.com/api/v1/borrows`, {
       method: 'POST',
       headers: {
         'Content-type': 'application/json',
@@ -51,7 +51,7 @@ export function createBorrow(bookId: any, borrowerId: any = user) {
 
 export function borrowBook(borrow: Borrow) {
   return (dispatch: Dispatch) => {
-    return fetch(`http://localhost:5000/api/v1/borrows`, {
+    return fetch(`https://salty-atoll-28842.herokuapp.com/api/v1/borrows`, {
       method: 'POST',
       headers: {
         'Content-type': 'application/json',
@@ -66,7 +66,9 @@ export function borrowBook(borrow: Borrow) {
 }
 export function fetchUserBorrow() {
   return (dispatch: Dispatch) => {
-    return fetch(`http://localhost:5000/api/v1/borrows/${user}`)
+    return fetch(
+      `https://salty-atoll-28842.herokuapp.com/api/v1/borrows/${user}`
+    )
       .then((resp) => resp.json())
       .then((borrows) => {
         dispatch(setBorrow(borrows))

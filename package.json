@@ -9,6 +9,10 @@
   "author": "Bowden Kelly",
   "license": "MIT",
   "scripts": {
+    "build:ui": "rm -rf build && cd client && npm run build --prod && cp -r build ../../fast-track-5-typescript-men-boilerplate",
+    "deploy": "git push heroku features:master",
+    "deploy:full": "npm run build:ui && git add . && git commit -m uibuild && npm run deploy",
+    "logs:prod": "heroku logs --tail",
     "start": "npm run serve",
     "build": "npm run build-sass && npm run build-ts && npm run lint && npm run copy-static-assets",
     "serve": "node dist/server.js",
@@ -18,6 +22,7 @@
     "watch-test": "npm run test -- --watchAll",
     "build-ts": "tsc",
     "watch-ts": "tsc -w",
+    "lint": "tsc --noEmit && eslint \"**/*.{js,ts}\" --quiet --fix",
     "copy-static-assets": "ts-node copyStaticAssets.ts",
     "debug": "npm run build && npm run watch-debug",
     "serve-debug": "nodemon --inspect dist/server.js",

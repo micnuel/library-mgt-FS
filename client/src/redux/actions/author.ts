@@ -28,7 +28,7 @@ export function updateAuthor(author: Author): AuthorActions {
 // Async action processed by redux-thunk middleware
 export function createAuthor(author: Author) {
   return (dispatch: Dispatch) => {
-    return fetch(`http://localhost:5000/api/v1/authors`, {
+    return fetch(`https://salty-atoll-28842.herokuapp.com/api/v1/authors`, {
       method: 'POST',
       headers: {
         'Content-type': 'application/json',
@@ -52,13 +52,16 @@ export function setAuthors(authors: Author[]): AuthorActions {
 }
 export function fetchAuthorUpdate(update: Partial<Author>, authorId?: string) {
   return (dispatch: Dispatch) => {
-    return fetch(`http://localhost:5000/api/v1/authors/${authorId}`, {
-      method: 'PUT',
-      headers: {
-        'Content-type': 'application/json',
-      },
-      body: JSON.stringify(update),
-    })
+    return fetch(
+      `https://salty-atoll-28842.herokuapp.com/api/v1/authors/${authorId}`,
+      {
+        method: 'PUT',
+        headers: {
+          'Content-type': 'application/json',
+        },
+        body: JSON.stringify(update),
+      }
+    )
       .then((resp) => resp.json())
       .then((authors) => {
         dispatch(updateAuthor(authors))
@@ -68,7 +71,7 @@ export function fetchAuthorUpdate(update: Partial<Author>, authorId?: string) {
 
 export function fetchAuthors() {
   return (dispatch: Dispatch) => {
-    return fetch(`http://localhost:5000/api/v1/authors`)
+    return fetch(`https://salty-atoll-28842.herokuapp.com/api/v1/authors`)
       .then((resp) => resp.json())
       .then((authors) => {
         dispatch(setAuthors(authors))
